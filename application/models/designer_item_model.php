@@ -11,18 +11,37 @@
 		}
 
 		public function add_item( $designer_id ) {
+
+			$title = $this->input->post('item_title');
+
+			$query = $this->db->get_where( 'Designer_table', array( 'id'=>$designer_id ) );
+			$row = $query->row();
+			$designer_dir_path = $row->Dir_path;
+			$item_dir_path = $designer_dir_path.'/'.$title;
 			$data = array(
-				'Title' => $this->input->post('item_title'),
+				'Title' => $title,
 				'Sub_title' => $this->input->post('item_sub_title'),
 				'Price' => $this->input->post('item_price'),
 				'Description' => $this->input->post('item_description'),
 				'Compostion' => $this->input->post('item_compostion'),
 				'Category' => $this->input->post('item_category'),
+				'Dir_path' => $item_dir_path,
 				'Designer_id' => $designer_id
 			);
 
 			$this->db->insert( 'item_table', $data );
-			$current_working_item = array( 'current_working_item' => $this->input->post('item_title') );
-			$this->session->set_userdata( $current_working_item );
+
+			// Set session for current working item.
+			$query = $this->db->get_where( 'Item_table', array( 'Title'=>$title) );
+			$row = $query->row();
+			$item_id = $row->Id;
+			$current_working_item = array( 'item_id'=>$item_id);
+			$this->session->set_userdata($current_working_item);
+		}
+
+		public function get_dir($item_id) {
+			$query = $this->db->get_where( 'Item_table', array('id' => $item_id) );
+			$row = $query->row();
+			return $row->Dir_path;
 		}
 	}

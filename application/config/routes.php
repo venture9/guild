@@ -42,7 +42,8 @@
 $route[ 'designer' ] = "designer";
 $route[ 'designer/upload/catalog' ] = "designer/upload_catalog";
 $route[ 'designer/do_upload' ] = "designer/do_upload";
-$route[ 'designer/upload/item' ] = "designer/upload_item";
+$route[ 'designer/add/item' ] = "designer/add_item";
+$route[ 'designer/add_designer' ] = "designer/add_designer";
 
 
 // routes for Costumers

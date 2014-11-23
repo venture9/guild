@@ -9,18 +9,23 @@
 
 		public function __construct() {
 			parent::__construct();
+			$this->load->model( 'designer_model' );
 			$this->load->model( 'designer_item_model');
 			$this->load->helper('form');
 		}
 
 		public function index() {
-			if( $designer = $this->session->userdata('user_name')) {
+			if( null !== $this->session->userdata('user_id') ) {
+				$user_id = $this->session->userdata('user_id');
+				$designer_id = $this->designer_model->get_id($user_id);
+				$data['designer_id'] = $designer_id;
+				$data['designer_name'] = $this->designer_model->get_name($designer_id);
+				$data['designer_dir_path'] = $this->designer_model->get_dir($designer_id);
 
-				$this->check_designer_dir();
+				$item_id = $this->session->userdata('item_id');
+				$data['item_id'] = $item_id;
+				$data['item_dir_path'] = $this->designer_item_model->get_dir($item_id);
 
-				$data['designer_id'] = $this->session->userdata('user_id');
-				$data['designer_name'] = $designer;
-				$data['designer_dir_path'] = $this->session->userdata('designer_dir_path');
 				$data['error'] = '';
 				$this->load->view( 'static/upload_header' );
 				$this->load->view( 'designer/dashboard', $data );
@@ -37,7 +42,21 @@
 			$this->load->view( 'designer/upload_catalog', $data );
 		}
 
-		public function upload_item() {
+		public function add_designer() {
+			$this->load->library( 'form_validation' );
+			$this->form_validation->set_rules( 'designer_name', 'Designer Name', 'required');
+			$this->form_validation->set_rules( 'designer_email', 'Designer Email', 'required');
+
+			if($this->form_validation->run() == FALSE) {
+				$this->index();
+			}
+			else
+			{
+				$this->designer_model->add_designer();
+			}
+		}
+
+		public function add_item() {
 			$this->load->library( 'form_validation' );
 
 			$this->form_validation->set_rules('item_title', 'Title', 'required');
@@ -50,29 +69,14 @@
 			else
 			{
 				// More validations here.
-				$desinger_id = $this->session->userdata('user_id');
-				$this->designer_item_model->add_item( $desinger_id );
+				$designer_id = $this->session->userdata('designer_id');
+				$this->designer_item_model->add_item( $designer_id );
 			}
 
 		}
 
 		public function upload_files() {
 			$this->load->view( 'desinger/upload_files' );
-		}
-
-		public function check_designer_dir() {
-			// path like: /uploads/designer_name/item_name/
-			$designer = $this->session->userdata('user_name');
-			$dir_path = getcwd().'/uploads/'.$designer;
-
-			if( !is_dir($dir_path) ) {
-				// dest path is not a directory, create a directory, access 755.
-				mkdir($dir_path, 0755);
-				echo "Just made a directory for $designer";
-			}
-			$designer_dir_path = array( 'designer_dir_path' => $dir_path );
-			$this->session->set_userdata( $designer_dir_path );
-
 		}
 
 		public function do_upload()
