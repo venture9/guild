@@ -41,26 +41,35 @@
 
 		function login($email,$password)
 		{
-		$this->db->where("email", $email);
-		$this->db->where("password", $password);
-		$query = $this->db->get("Users");
-		if($query->num_rows() == 1)
-		{
-			//p('Found rows:'.$query->num_rows());
-			foreach($query->result() as $rows)
+			$this->db->where("email", $email);
+			$this->db->where("password", $password);
+			$query = $this->db->get("Users");
+			if($query->num_rows() == 1)
 			{
-				//add all data to session
-				$newdata = array(
-				  'user_id'  => $rows->Id,
-				  'user_name'  => $rows->Username,
-				  'user_email' => $rows->Email,
-				  'user_role' => $rows->Role,
-				  'logged_in'  => TRUE,
-				);
-			}
+
+				//p('Found rows:'.$query->num_rows());
+				foreach($query->result() as $rows)
+				{
+					//add all data to session
+					$newdata = array(
+					  'user_id'  => $rows->Id,
+					  'user_name'  => $rows->Username,
+					  'user_email' => $rows->Email,
+					  'user_role' => $rows->Role,
+					  'logged_in'  => TRUE,
+					);
+				}
 				$this->session->set_userdata($newdata);
 				return true;
 			}
 			return false;
+		}
+
+		function check_role($user_id)
+		{
+			$query = $this->db->get_where( 'Users', array('Id'=>$user_id) );
+			$row = $query->row();
+			$role = $row->Role;
+			return $role;
 		}
 	}

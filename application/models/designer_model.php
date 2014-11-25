@@ -13,16 +13,16 @@
 		public function add_designer() {
 
 			$user_id = $this->session->userdata('user_id');
-			$designer_name = $this->session->userdata('user_name');
+			$designer_name = $this->input->post('designer_name');
 			$dir_path = getcwd().'/uploads/'.$designer_name;
+
 
 			if( !is_dir($dir_path) ) {
 				// Should always trigger.
 				mkdir($dir_path, 0755);
 			}
-
 			$data = array(
-				'Name' => $this->input->post('designer_name'),
+				'Name' => $designer_name,
 				'Phone' => $this->input->post('designer_phone'),
 				'Email' => $this->input->post('designer_email'),
 				'Dir_path' => $dir_path,
@@ -34,18 +34,23 @@
 			$this->db->insert( 'Designer_table', $data );
 
 			//Retrive the designer id from this line.
-			$this->db->where('Name', $this->input->post('designer_name'));
-			$query = $this->db->get('Designer_table');
-			if( $query->num_rows() == 1 ) {
-				foreach( $query->result() as $row ) {
-					$designer_session_array = array(
-						'designer_id' => $row->Id
-					);
-				}
-				$this->session->set_userdata($designer_session_array);
-			} else {
-				return false;
-			}
+			$query = $this->db->get_where('Designer_table', array('Name' => $designer_name));
+			$row = $query->row();
+			$designer_id = $row->Id;
+			$this->session->set_userdata( array('designer_id' => $designer_id) );
+			// if( $query->num_rows() == 1 ) {
+			// 	foreach( $query->result() as $row ) {
+			// 		$designer_session_array = array(
+			// 			'designer_id' => $row->Id
+			// 		);
+			// 	}
+			// 	$this->session->set_userdata($designer_session_array);
+			// } else {
+			// 	return false;
+			// }
+
+			// Make a dir for that designer.
+
 		}
 
 		public function get_id($user_id) {

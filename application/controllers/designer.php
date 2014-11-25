@@ -11,20 +11,31 @@
 			parent::__construct();
 			$this->load->model( 'designer_model' );
 			$this->load->model( 'designer_item_model');
-			$this->load->helper('form');
+			$this->load->helper('form', 'file');
 		}
 
 		public function index() {
-			if( null !== $this->session->userdata('user_id') ) {
-				$user_id = $this->session->userdata('user_id');
-				$designer_id = $this->designer_model->get_id($user_id);
+			if( $this->session->userdata('user_id') && $this->session->userdata('designer_id') ) {
+
+				//$user_id = $this->session->userdata('user_id');
+
+				//$designer_id = $this->designer_model->get_id($user_id);
+				$designer_id = $this->session->userdata('designer_id');
 				$data['designer_id'] = $designer_id;
 				$data['designer_name'] = $this->designer_model->get_name($designer_id);
 				$data['designer_dir_path'] = $this->designer_model->get_dir($designer_id);
 
-				$item_id = $this->session->userdata('item_id');
-				$data['item_id'] = $item_id;
-				$data['item_dir_path'] = $this->designer_item_model->get_dir($item_id);
+				$data['error'] = '';
+				$this->load->view( 'static/upload_header' );
+				$this->load->view( 'designer/dashboard', $data );
+				$this->load->view( 'static/upload_footer' );
+			} elseif( $this->session->userdata('user_id') && !$this->session->userdata('designer_id') ) {
+				$user_id = $this->session->userdata('user_id');
+				$designer_id = $this->designer_model->get_id($user_id);
+
+				$data['designer_id'] = $designer_id;
+				$data['designer_name'] = $this->designer_model->get_name($designer_id);
+				$data['designer_dir_path'] = $this->designer_model->get_dir($designer_id);
 
 				$data['error'] = '';
 				$this->load->view( 'static/upload_header' );
@@ -71,8 +82,19 @@
 				// More validations here.
 				$designer_id = $this->session->userdata('designer_id');
 				$this->designer_item_model->add_item( $designer_id );
+				$this->add_images();
 			}
 
+		}
+
+		public function add_images() {
+
+			$item_id = $this->session->userdata('item_id');
+			$data['item_dir_path'] = $this->designer_item_model->get_dir($item_id);
+
+			$this->load->view('static/upload_header');
+			$this->load->view('designer/add_images', $data);
+			$this->load->view('static/upload_footer');
 		}
 
 		public function upload_files() {
@@ -108,23 +130,23 @@
 			 * This method handles user uploading images, they should be stored under
 			 * /uploads/designer_name/item_name/
 			 */
+			$designer_id = $this->session->userdata( 'designer_id' );
+			$designer_name = $this->designer_model->get_name( $designer_id );
+			$item_id = $this->session->userdata('item_id');
+			$item_name = $this->designer_item_model->get_name( $item_id );
 
-			$designer_name = $this->session->userdata('user_name');
-			$item_name = $this->session->userdata('current_working_item');
 
+			p("item name: $item_name");
 	        $upload_path_url = base_url() . 'uploads/'.$designer_name.'/'.$item_name.'/';
-
+	        p($upload_path_url);
 	        $config['upload_path'] = FCPATH . 'uploads/'.$designer_name.'/'.$item_name.'/';
 	        $config['allowed_types'] = 'jpg|jpeg|png|gif';
 	        $config['max_size'] = '30000';
 
 	        $this->load->library('upload', $config);
-
+	        p('ready');
 	        if (!$this->upload->do_upload()) {
-	            //$error = array('error' => $this->upload->display_errors());
-	            //$this->load->view('upload', $error);
-	            p('can not do upload method');
-	            //Load the list of existing files in the upload directory
+
 
 	            $existingFiles = get_dir_file_info($config['upload_path']);
 	            $foundFiles = array();
@@ -146,6 +168,7 @@
 	            $this->output
 	            ->set_content_type('application/json')
 	            ->set_output(json_encode(array('files' => $foundFiles)));
+
 	        } else {
 	            $data = $this->upload->data();
 
@@ -168,6 +191,8 @@
 	            $info->size = $data['file_size'] * 1024;
 	            $info->type = $data['file_type'];
 	            $info->url = $upload_path_url . $data['file_name'];
+
+	            p($info);
 	            // I set this to original file since I did not create thumbs.  change to thumbnail directory if you do = $upload_path_url .'/thumbs' .$data['file_name']
 	            $info->thumbnailUrl = $upload_path_url . 'thumbs/' . $data['file_name'];
 	            $info->deleteUrl = base_url() . 'upload/deleteImage/' . $data['file_name'];

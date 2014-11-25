@@ -90,6 +90,7 @@ class Main extends CI_Controller {
 		'user_id'   =>'',
 		'user_name'  =>'',
 		'user_email'     => '',
+		'designer_id' =>'',
 		'logged_in' => FALSE
 		);
 		$this->session->unset_userdata($newdata );

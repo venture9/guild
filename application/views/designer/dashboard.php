@@ -4,7 +4,7 @@
 	<h5> <?php echo $designer_id; ?> </h5>
 
 	<h5> Designer - <?php echo $designer_dir_path; ?></h5>
-	<h5> Item - <?php echo $item_dir_path; ?></h5>
+	<h5> Item - <?php //echo $item_dir_path; ?></h5>
 	<?php echo validation_errors('<p class="error">'); ?>
 	<div class="catalog-container hidden">
 		<h3>Placeholders for Dashboard</h3>
