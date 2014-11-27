@@ -20,6 +20,7 @@
 				//$user_id = $this->session->userdata('user_id');
 
 				//$designer_id = $this->designer_model->get_id($user_id);
+				echo "haha";
 				$designer_id = $this->session->userdata('designer_id');
 				$data['designer_id'] = $designer_id;
 				$data['designer_name'] = $this->designer_model->get_name($designer_id);
@@ -30,12 +31,15 @@
 				$this->load->view( 'designer/dashboard', $data );
 				$this->load->view( 'static/upload_footer' );
 			} elseif( $this->session->userdata('user_id') && !$this->session->userdata('designer_id') ) {
+
 				$user_id = $this->session->userdata('user_id');
 				$designer_id = $this->designer_model->get_id($user_id);
+				$this->session->set_userdata( array("designer_id" => $designer_id) );
 
 				$data['designer_id'] = $designer_id;
 				$data['designer_name'] = $this->designer_model->get_name($designer_id);
 				$data['designer_dir_path'] = $this->designer_model->get_dir($designer_id);
+
 
 				$data['error'] = '';
 				$this->load->view( 'static/upload_header' );
@@ -81,8 +85,9 @@
 			{
 				// More validations here.
 				$designer_id = $this->session->userdata('designer_id');
+
 				$this->designer_item_model->add_item( $designer_id );
-				$this->add_images();
+				$this->add_images( $designer_id );
 			}
 
 		}

@@ -22,6 +22,9 @@
 			);
 			$this->db->insert( 'Users' , $data);
 
+			$email = $this->input->post('email_address');
+			$password = md5($this->input->post('password'));
+			$this->login($email, $password);
 		}
 
 		function validate($key)

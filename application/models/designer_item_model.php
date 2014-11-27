@@ -13,7 +13,6 @@
 		public function add_item( $designer_id ) {
 
 			$title = $this->input->post('item_title');
-
 			$query = $this->db->get_where( 'Designer_table', array( 'id'=>$designer_id ) );
 			$row = $query->row();
 			$designer_dir_path = $row->Dir_path;

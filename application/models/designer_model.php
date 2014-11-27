@@ -38,18 +38,6 @@
 			$row = $query->row();
 			$designer_id = $row->Id;
 			$this->session->set_userdata( array('designer_id' => $designer_id) );
-			// if( $query->num_rows() == 1 ) {
-			// 	foreach( $query->result() as $row ) {
-			// 		$designer_session_array = array(
-			// 			'designer_id' => $row->Id
-			// 		);
-			// 	}
-			// 	$this->session->set_userdata($designer_session_array);
-			// } else {
-			// 	return false;
-			// }
-
-			// Make a dir for that designer.
 
 		}
 
