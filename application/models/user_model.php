@@ -9,22 +9,45 @@
 			parent::__construct();
 		}
 
-		function add_user($role, $key)
+		function add_user($role, $key, $company)
 		{
-			//$key = $this->input->post('user_key');
-			// validate this key
+			$name = $this->input->post('user_name');
+			$email = $this->input->post('email_address');
+			$password = md5($this->input->post('password'));
+
 			$data = array(
-				'username' => $this->input->post('user_name'),
-				'email' => $this->input->post('email_address'),
+				'username' => $name,
+				'email' => $email,
 				'role' => $role,
-				'password' => md5($this->input->post('password')),
+				'password' => $password,
 				'pin' => $key
 			);
 			$this->db->insert( 'Users' , $data);
-
-			$email = $this->input->post('email_address');
-			$password = md5($this->input->post('password'));
-			$this->login($email, $password);
+			
+			$query = $this->db->get_where( 'Users', array("username" => $name) );
+			$row = $query->row();
+			$id = $row->Id;
+			
+			// $this->login($email, $password);
+			if( $role == 'Costumer' ) {
+				
+			}else{
+				// Designers -> get Dir_path
+				$dir_path = getcwd().'/uploads/'.$name;
+				if( !is_dir($dir_path) ) {
+					mkdir($dir_path, 0755);
+				}
+				
+				$data = array(
+					'Name' => $name,
+					'Email' => $email,
+					'Boutique' => $company, 
+					'Dir_path' => $dir_path,
+					'User_id' => $id
+				);
+				$this->db->insert( 'Designer_table', $data);
+				$this->login( $email, $password);
+			}
 		}
 
 		function validate($key)
@@ -74,5 +97,13 @@
 			$row = $query->row();
 			$role = $row->Role;
 			return $role;
+		}
+		
+		function get_company($key) {
+			$query = $this->db->get_where( 'Pin_table', array('PIN' => $key) );
+			$row = $query->row();
+			$company = $row->Company;
+			
+			return $company;
 		}
 	}

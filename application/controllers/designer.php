@@ -15,41 +15,28 @@
 		}
 
 		public function index() {
-			if( $this->session->userdata('user_id') && $this->session->userdata('designer_id') ) {
 
-				//$user_id = $this->session->userdata('user_id');
-
-				//$designer_id = $this->designer_model->get_id($user_id);
-				echo "haha";
-				$designer_id = $this->session->userdata('designer_id');
-				$data['designer_id'] = $designer_id;
-				$data['designer_name'] = $this->designer_model->get_name($designer_id);
-				$data['designer_dir_path'] = $this->designer_model->get_dir($designer_id);
-
-				$data['error'] = '';
-				$this->load->view( 'static/upload_header' );
-				$this->load->view( 'designer/dashboard', $data );
-				$this->load->view( 'static/upload_footer' );
-			} elseif( $this->session->userdata('user_id') && !$this->session->userdata('designer_id') ) {
-
-				$user_id = $this->session->userdata('user_id');
-				$designer_id = $this->designer_model->get_id($user_id);
-				$this->session->set_userdata( array("designer_id" => $designer_id) );
-
-				$data['designer_id'] = $designer_id;
-				$data['designer_name'] = $this->designer_model->get_name($designer_id);
-				$data['designer_dir_path'] = $this->designer_model->get_dir($designer_id);
-
-
-				$data['error'] = '';
-				$this->load->view( 'static/upload_header' );
-				$this->load->view( 'designer/dashboard', $data );
-				$this->load->view( 'static/upload_footer' );
-			} else {
-
-				header('Location: '.base_url());
+			$user_id = $this->session->userdata( 'user_id' );
+			if( !$user_id ) {
+				$this->go_home();
 			}
 
+			$designer_id = $this->designer_model->get_id( $user_id );
+			$designer_name = $this->designer_model->get_name( $designer_id );
+			$data[ 'designer_id' ] = $designer_id;
+			$data[ 'designer_name' ] = $designer_name;
+			$this->load_dashboard( $data );
+
+		}
+
+		private function go_home() {
+			header('Location: '.base_url());
+		}
+
+		private function load_dashboard( $data ) {
+			$this->load->view( 'main/header' );
+			$this->load->view( 'designer/dashboard', $data );
+			$this->load->view( 'main/footer' );
 		}
 
 		public function upload_catalog() {

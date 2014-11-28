@@ -7,6 +7,8 @@
 	    <meta name="description" content="Demo project with jQuery">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+		<!-- Core Guild Css -->
+		<link rel="stylesheet" href="<?php echo asset_url().'css/guild.css'; ?>">
 		<style type="text/css"></style>
 	</head>
 	<body>

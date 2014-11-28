@@ -1,9 +1,8 @@
 
-<div class="container">
+<div class="container designer-dashboard-container">
 	<h3> <?php echo $designer_name; ?> </h3>
-	<h5> <?php echo $designer_id; ?> </h5>
 
-	<h5> Designer - <?php echo $designer_dir_path; ?></h5>
+	<h5> Designer - <?php //echo $designer_dir_path; ?></h5>
 	<h5> Item - <?php //echo $item_dir_path; ?></h5>
 	<?php echo validation_errors('<p class="error">'); ?>
 	<div class="catalog-container hidden">
@@ -31,80 +30,96 @@
 		</form>
 	</div>
 	<hr />
-	<div class="file-container">
-		<h2 class="center">New Design</h2>
-		<button class="btn btn-primary">New Design</button>
-
-		<form action="<?php echo base_url().'designer/add/item'; ?>" method="post" enctype="">
-			<p>
-				<input type="hidden" name="designer_id" value="<?php echo $designer_id; ?>" size="50" />
-			</p>
-			<p>
-				<label for="catalog_name">Title</label> <br />
-				<input type="text" name="item_title" size="50" />
-			</p>
-			<p>
-				<label for="catalog_name">Sub Title</label> <br />
-				<input type="text" name="item_sub_title" size="50" />
-			</p>
-			<p>
-				<label for="catalog_name">Price</label> <br />
-				<input type="text" name="item_price" size="50" />
-			</p>
-			<p>
-				<label for="catalog_name">Size Available</label> <br />
-				<select name="item_size_available" id="">
-					<option value="all_size_available">All sizes are available</option>
-				</select>
-			</p>
-			<p>
-				<label for="catalog_name">Description</label> <br />
-				<textarea name="item_description" id="" cols="30" rows="10"></textarea>
-			</p>
-			<p>
-				<label for="catalog_name">Composition</label> <br />
-				<input type="text" name="item_composition" size="50" />
-			</p>
-			<p>
-				<label for="tags"> Category </label> <br />
-				<input type="text" name="item_category" size="50" />
-			</p>
-			<input type="submit" name="create-catalog-btn" value="Next" class="btn btn-primary"/>
-		</form>
-			<!-- Designer designer Info-->
+	<div class="left-bar col-md-4">
+		<span class="left-row">
+			<h4>User Profile</h4>
 			<hr />
-		<h2 class="center">Designer</h2>
-		<form action="<?php echo base_url().'designer/add_designer'; ?>" method="post">
-			<p>
-				<label for="designer_name">Designer Name</label> <br />
-				<input type="text" name="designer_name" size="50" />
-			</p>
-			<p>
-				<label for="catalog_name">Email</label> <br />
-				<input type="text" name="designer_email" size="50" />
-			</p>
-			<p>
-				<label for="catalog_name">Phone</label> <br />
-				<input type="text" name="designer_phone" size="50" />
-			</p>
+		</span>
+		<span class="left-row">
+			<h4>Upload Design</h4>
+			<hr />
+		</span>
+		<span class="left-row">
+			<h4>Orders</h4>
+			<hr />
+		</span>
+	</div>
+	<div class="right-container col-md-8">
 
-			<p>
-				<label for="designer_name">Designer Description</label> <br />
-				<textarea name="designer_description" id="" cols="30" rows="10"></textarea>
-			</p>
+		<div class='desinger-info'>
+			<h2>Personal information</h2>
+			<form action="<?php echo base_url().'designer/add_designer'; ?>" method="post">
+				<p>
+					<label for="designer_name">Designer Name</label> <br />
+					<input type="text" name="designer_name" size="50" />
+				</p>
+				<p>
+					<label for="catalog_name">Email</label> <br />
+					<input type="text" name="designer_email" size="50" />
+				</p>
+				<p>
+					<label for="catalog_name">Phone</label> <br />
+					<input type="text" name="designer_phone" size="50" />
+				</p>
 
-			<p>
-				<label for="catalog_name">Boutique Name</label> <br />
-				<input type="text" name="boutique_name" size="50" />
-			</p>
+				<p>
+					<label for="designer_name">Designer Description</label> <br />
+					<textarea name="designer_description" id="" cols="30" rows="10"></textarea>
+				</p>
 
-			<p>
-				<label for="catalog_name">Boutique Description</label> <br />
-				<textarea name="boutique_description" id="" cols="30" rows="10"></textarea>
-			</p>
+				<p>
+					<label for="catalog_name">Boutique Name</label> <br />
+					<input type="text" name="boutique_name" size="50" />
+				</p>
 
-			<input type="submit" name="create-catalog-btn" value="Next" class="btn btn-success"/>
-		</form>
+				<p>
+					<label for="catalog_name">Boutique Description</label> <br />
+					<textarea name="boutique_description" id="" cols="30" rows="10"></textarea>
+				</p>
+
+				<input type="submit" name="create-catalog-btn" value="Next" class="btn btn-success"/>
+			</form>
+		</div>
+
+		<div class="designer-upload">
+			<form action="<?php echo base_url().'designer/add/item'; ?>" method="post" enctype="">
+				<p>
+					<input type="hidden" name="designer_id" value="<?php echo $designer_id; ?>" size="50" />
+				</p>
+				<p>
+					<label for="catalog_name">Title</label> <br />
+					<input type="text" name="item_title" size="50" />
+				</p>
+				<p>
+					<label for="catalog_name">Sub Title</label> <br />
+					<input type="text" name="item_sub_title" size="50" />
+				</p>
+				<p>
+					<label for="catalog_name">Price</label> <br />
+					<input type="text" name="item_price" size="50" />
+				</p>
+				<p>
+					<label for="catalog_name">Size Available</label> <br />
+					<select name="item_size_available" id="">
+						<option value="all_size_available">All sizes are available</option>
+					</select>
+				</p>
+				<p>
+					<label for="catalog_name">Description</label> <br />
+					<textarea name="item_description" id="" cols="30" rows="10"></textarea>
+				</p>
+				<p>
+					<label for="catalog_name">Composition</label> <br />
+					<input type="text" name="item_composition" size="50" />
+				</p>
+				<p>
+					<label for="tags"> Category </label> <br />
+					<input type="text" name="item_category" size="50" />
+				</p>
+				<input type="submit" name="create-catalog-btn" value="Next" class="btn btn-primary"/>
+			</form>
+		</div>
+
 	</div>
 </div>
 

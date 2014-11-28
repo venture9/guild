@@ -51,9 +51,10 @@ class Main extends CI_Controller {
 		{
 			$key = $this->input->post('user_key');
 			$role = $this->user_model->validate($key);
+			$company = $this->user_model->get_company($key);
 			if($role)
 			{
-				$this->user_model->add_user($role, $key);
+				$this->user_model->add_user($role, $key, $company);
 				$this->dashboard();
 			} else {
 				// Pin validation failed

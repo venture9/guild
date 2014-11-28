@@ -33,5 +33,10 @@
 	<!--[if (gte IE 8)&(lt IE 10)]>
 	<script src="js/cors/jquery.xdr-transport.js"></script>
 	<![endif]-->
+	<!-- Core Guild Js -->
+	<script>
+		jQuery(document).ready(function(){
+		});
+	</script>
 	</body>
 </html>

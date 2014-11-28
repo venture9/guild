@@ -21,5 +21,10 @@
 <!-- CSS adjustments for browsers with JavaScript disabled -->
 <noscript><link rel="stylesheet" href="<?php echo asset_url().'css/jquery.fileupload-noscript.css'; ?>"></noscript>
 <noscript><link rel="stylesheet" href="<?php echo asset_url().'css/jquery.fileupload-ui-noscript.css'; ?>"></noscript>
+
+<!-- Core Guild Css -->
+<link rel="stylesheet" href="<?php echo asset_url().'css/guild.css'; ?>">
+
+
 </head>
 <body>
