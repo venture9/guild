@@ -38,6 +38,10 @@
 |
 */
 
+// ajax
+$route[ 'ajax' ] = "";
+$route[ 'ajax/designer_info_update' ] = "ajax/designer_info_update";
+
 // routes for Designer
 $route[ 'designer' ] = "designer";
 $route[ 'designer/upload/catalog' ] = "designer/upload_catalog";

@@ -58,4 +58,13 @@
 			$row = $query->row();
 			return $row->Dir_path;
 		}
+
+		public function get_attr($designer_id, $attr_name) {
+			$query = $this->db->get_where( 'Designer_table', array('id' => $designer_id) );
+			$row = $query -> row();
+			if( $row ) {
+				return $row->$attr_name;
+			}
+			return " ";
+		}
 	}

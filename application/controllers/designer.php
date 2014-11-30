@@ -23,8 +23,18 @@
 
 			$designer_id = $this->designer_model->get_id( $user_id );
 			$designer_name = $this->designer_model->get_name( $designer_id );
+			$designer_email = $this->designer_model->get_attr( $designer_id, 'Email' );
+			$designer_boutique = $this->designer_model->get_attr( $designer_id, 'Boutique' );
+
+			// Mandatory Fields
 			$data[ 'designer_id' ] = $designer_id;
 			$data[ 'designer_name' ] = $designer_name;
+			$data[ 'designer_email' ] = $designer_email;
+			$data[ 'designer_boutique' ] = $designer_boutique;
+			// Optional Fields
+			$data[ 'designer_phone' ] = $this->designer_model->get_attr( $designer_id, 'Phone');
+			$data[ 'designer_description' ] = $this->designer_model->get_attr( $designer_id, 'Designer_description' );
+			$data[ 'boutique_description' ] = $this->designer_model->get_attr( $designer_id, 'Boutique_description' );
 			$this->load_dashboard( $data );
 
 		}

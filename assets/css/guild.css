@@ -16,6 +16,10 @@
 	width: 80%;
 }
 
+.left-row-item {
+	cursor: pointer;
+}
+
 .designer-upload {
 	display: none;
 }
