@@ -20,6 +20,20 @@
 					}
 				});
 			});
+
+			$("#designer-info-btn").click(function(event){
+				event.preventDefault();
+				// toggle up others, toggle down designer-info-design
+				$("#designer-upload").hide();
+				$("#designer-info").slideDown(400);
+			});
+
+			$("#designer-upload-btn").click(function(event){
+				event.preventDefault();
+				// toggle up others, toggle down designer-upload-design
+				$("#designer-info").hide();
+				$("#designer-upload").slideDown(400);
+			});
 		});
 	</script>
 </html>
