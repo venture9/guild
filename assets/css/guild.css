@@ -16,6 +16,13 @@
 	width: 80%;
 }
 
+.designer-block .hide {
+	display: none;
+}
+
+.designer-block .active {
+}
+
 .left-row-item {
 	cursor: pointer;
 }

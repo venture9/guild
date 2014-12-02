@@ -47,6 +47,18 @@
 
 		}
 
+		public function save_image( $info, $item_id, $item_name, $designer_id ) {
+			$data = array(
+				'Name' => $item_name,
+				'Item_path' => $info->url,
+				'Item_id' => $item_id,
+				'Designer_id' => $designer_id
+			);
+
+			$this->db->insert('Image_table', $data);
+
+		}
+
 		public function get_name( $item_id ) {
 			$query = $this->db->get_where( 'Item_table', array('id' => $item_id) );
 			$row = $query->row();

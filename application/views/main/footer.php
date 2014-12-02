@@ -21,10 +21,31 @@
 				});
 			});
 
+			$('.left-bar > .left-row > a').click(function( event ){
+				event.preventDefault();
+				// hide current content.
+				var active_selector_id = $('.left-bar > .left-row > a.active').attr('href');
+				$(active_selector_id).removeClass('active');
+				$(active_selector_id).addClass('hide');
+				// de-active current nav.
+				var active_nav = $('.left-bar > .left-row > a.active');
+				active_nav.removeClass('active');
+
+				// show the clicked content.
+				var target_selector_id = $(this).attr('href');
+				$(target_selector_id).removeClass('hide');
+				$(target_selector_id).addClass('active');
+				//$(target_selector_id).toggle(400);
+				// active clicked nav
+				$(this).addClass('active');
+
+			});
+			/*
 			$("#designer-info-btn").click(function(event){
 				event.preventDefault();
 				// toggle up others, toggle down designer-info-design
 				$("#designer-upload").hide();
+				$("")
 				$("#designer-info").slideDown(400);
 			});
 
@@ -34,6 +55,7 @@
 				$("#designer-info").hide();
 				$("#designer-upload").slideDown(400);
 			});
+			*/
 		});
 	</script>
 </html>

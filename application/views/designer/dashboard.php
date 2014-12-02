@@ -36,14 +36,20 @@
 	<!-- Left Menu -->
 	<div class="left-bar col-md-4">
 		<span class="left-row">
-			<a href="#designer-info" id="designer-info-btn" class="active left-row-item">
-				<h4>User Profile</h4>
+			<a href="#designer-info" id="designer-info-btn" class="left-row-item active">
+				<h4>Your Profile</h4>
 				<hr />
 			</a>
 		</span>
 		<span class="left-row">
-			<a href="#designer-upload" class="left-row-item" id="designer-upload-btn" >
+			<a href="#designer-upload" id="designer-upload-btn" class="left-row-item" >
 				<h4>Upload Design</h4>
+				<hr />
+			</a>
+		</span>
+		<span class="left-row">
+			<a href="#manage-store" id="manage-store-btn" class="left-row-item" >
+				<h4>Manage Store</h4>
 				<hr />
 			</a>
 		</span>
@@ -57,7 +63,8 @@
 	<!-- Right Menu -->
 	<div class="right-container col-md-8">
 
-		<div id="designer-info" id="designer-info" class='desinger-info'>
+		<div id="designer-info" class="desinger-block active">
+			<h3> Your Profile </h3>
 			<form action="<?php echo base_url().'designer/add_designer'; ?>" method="post" id="designer-info-form">
 				<h2>Boutique Information</h2>
 				<p>
@@ -100,7 +107,8 @@
 			</div>
 		</div>
 
-		<div id="designer-upload" id="designer-upload" class="designer-upload">
+		<div id="designer-upload" class="designer-block hide">
+			<h3> Upload your design </h3>
 			<form action="<?php echo base_url().'designer/add/item'; ?>" method="post" enctype="">
 				<p>
 					<input type="hidden" name="designer_id" value="<?php echo $designer_id; ?>" size="50" />
@@ -137,6 +145,10 @@
 				</p>
 				<input type="submit" name="create-catalog-btn" value="Next" class="btn btn-primary"/>
 			</form>
+		</div>
+
+		<div id="manage-store" class="designer-block hide">
+			<h3> Manage Your Store</h3>
 		</div>
 
 	</div>

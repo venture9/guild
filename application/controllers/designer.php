@@ -81,7 +81,8 @@
 			else
 			{
 				// More validations here.
-				$designer_id = $this->session->userdata('designer_id');
+				$user_id = $this->session->userdata('user_id');
+				$designer_id = $this->designer_model->get_id( $user_id );
 
 				$this->designer_item_model->add_item( $designer_id );
 				$this->add_images( $designer_id );
@@ -128,88 +129,54 @@
 		}
 
 		public function do_upload_images() {
-			/**
-			 * This method handles user uploading images, they should be stored under
-			 * /uploads/designer_name/item_name/
-			 */
-			$designer_id = $this->session->userdata( 'designer_id' );
+
+			$user_id = $this->session->userdata( 'user_id' );
+			$designer_id = $this->designer_model->get_id( $user_id );
 			$designer_name = $this->designer_model->get_name( $designer_id );
 			$item_id = $this->session->userdata('item_id');
 			$item_name = $this->designer_item_model->get_name( $item_id );
 
+			$upload_path_url = base_url() . 'uploads/'.$designer_name.'/'.$item_name.'/';
+			$config['upload_path'] = FCPATH . 'uploads/'.$designer_name.'/'.$item_name.'/';
+			$config['allowed_types'] = 'jpg|jpeg|png|gif';
+			$config['max_size'] = '30000';
 
-			p("item name: $item_name");
-	        $upload_path_url = base_url() . 'uploads/'.$designer_name.'/'.$item_name.'/';
-	        p($upload_path_url);
-	        $config['upload_path'] = FCPATH . 'uploads/'.$designer_name.'/'.$item_name.'/';
-	        $config['allowed_types'] = 'jpg|jpeg|png|gif';
-	        $config['max_size'] = '30000';
+			$this->load->library('upload', $config);
+			p('ready');
+			if ($this->upload->do_upload()) {
 
-	        $this->load->library('upload', $config);
-	        p('ready');
-	        if (!$this->upload->do_upload()) {
+				$data = $this->upload->data();
 
+				$config = array();
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = $data['full_path'];
+				$config['create_thumb'] = TRUE;
+				$config['new_image'] = $data['file_path'] . 'thumbs/';
+				$config['maintain_ratio'] = TRUE;
+				$config['thumb_marker'] = '';
+				$config['width'] = 75;
+				$config['height'] = 50;
+				$this->load->library('image_lib', $config);
+				$this->image_lib->resize();
 
-	            $existingFiles = get_dir_file_info($config['upload_path']);
-	            $foundFiles = array();
-	            $f=0;
-	            foreach ($existingFiles as $fileName => $info) {
-	              if($fileName!='thumbs'){//Skip over thumbs directory
-	                //set the data for the json array
-	                $foundFiles[$f]['name'] = $fileName;
-	                $foundFiles[$f]['size'] = $info['size'];
-	                $foundFiles[$f]['url'] = $upload_path_url . $fileName;
-	                $foundFiles[$f]['thumbnailUrl'] = $upload_path_url . 'thumbs/' . $fileName;
-	                $foundFiles[$f]['deleteUrl'] = base_url() . 'upload/deleteImage/' . $fileName;
-	                $foundFiles[$f]['deleteType'] = 'DELETE';
-	                $foundFiles[$f]['error'] = null;
+				//set the data for the json array
+				$info = new StdClass;
+				$info->name = $data['file_name'];
+				$info->size = $data['file_size'] * 1024;
+				$info->type = $data['file_type'];
+				$info->url = $upload_path_url . $data['file_name'];
 
-	                $f++;
-	              }
-	            }
-	            $this->output
-	            ->set_content_type('application/json')
-	            ->set_output(json_encode(array('files' => $foundFiles)));
+				$info->thumbnailUrl = $upload_path_url . 'thumbs/' . $data['file_name'];
+				$info->deleteUrl = base_url() . 'upload/deleteImage/' . $data['file_name'];
+				$info->deleteType = 'DELETE';
+				$info->error = null;
 
-	        } else {
-	            $data = $this->upload->data();
+				$files[] = $info;
 
-	            $config = array();
-	            $config['image_library'] = 'gd2';
-	            $config['source_image'] = $data['full_path'];
-	            $config['create_thumb'] = TRUE;
-	            $config['new_image'] = $data['file_path'] . 'thumbs/';
-	            $config['maintain_ratio'] = TRUE;
-	            $config['thumb_marker'] = '';
-	            $config['width'] = 75;
-	            $config['height'] = 50;
-	            $this->load->library('image_lib', $config);
-	            $this->image_lib->resize();
-
-
-	            //set the data for the json array
-	            $info = new StdClass;
-	            $info->name = $data['file_name'];
-	            $info->size = $data['file_size'] * 1024;
-	            $info->type = $data['file_type'];
-	            $info->url = $upload_path_url . $data['file_name'];
-
-	            p($info);
-	            // I set this to original file since I did not create thumbs.  change to thumbnail directory if you do = $upload_path_url .'/thumbs' .$data['file_name']
-	            $info->thumbnailUrl = $upload_path_url . 'thumbs/' . $data['file_name'];
-	            $info->deleteUrl = base_url() . 'upload/deleteImage/' . $data['file_name'];
-	            $info->deleteType = 'DELETE';
-	            $info->error = null;
-
-	            $files[] = $info;
-	            //this is why we put this in the constants to pass only json data
-
-	            if (IS_AJAX) {
-	                echo json_encode(array("files" => $files));
-	            } else {
-	                $file_data['upload_data'] = $this->upload->data();
-	                $this->load->view('upload/upload_success', $file_data);
-	            }
-        	}
-    	}
+				if (IS_AJAX) {
+					$this->designer_item_model->save_image( $info, $item_id, $item_name, $designer_id );
+					echo json_encode(array("files" => $files));
+				}
+			}
+		}
 	}
