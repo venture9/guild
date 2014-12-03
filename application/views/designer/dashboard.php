@@ -114,29 +114,50 @@
 					<input type="hidden" name="designer_id" value="<?php echo $designer_id; ?>" size="50" />
 				</p>
 				<p>
-					<label for="catalog_name">Title</label> <br />
+					<label for="item_title">Title</label> <br />
 					<input type="text" name="item_title" size="50" />
 				</p>
 				<p>
-					<label for="catalog_name">Sub Title</label> <br />
+					<label for="item_sub_title">Sub Title</label> <br />
 					<input type="text" name="item_sub_title" size="50" />
 				</p>
 				<p>
-					<label for="catalog_name">Price</label> <br />
+					<label for="item_price">Price</label> <br />
 					<input type="text" name="item_price" size="50" />
 				</p>
 				<p>
-					<label for="catalog_name">Size Available</label> <br />
+					<span>
+						<label for="gender"> Gender </label>
+						<select name="gender" size="1" onchange="">
+							<option value="men" selected="selected"> Men </option>
+							<option value="women"> Women </option>
+						</select>
+					</span>
+					<span>
+						<label for="category"> Category </label>
+						<select name="category">
+							<option value="" selected="selected"> Please select the gender first </option>
+						</select>
+					</span>
+					<span>
+						<label for="item-type"> Type </label>
+						<select name="item-type" id="">
+							<option value="" selected="selected"> Please select the category first </option>
+						</select>
+					</span>
+				</p>
+				<p>
+					<label for="item_size_available">Size Available</label> <br />
 					<select name="item_size_available" id="">
 						<option value="all_size_available">All sizes are available</option>
 					</select>
 				</p>
 				<p>
-					<label for="catalog_name">Description</label> <br />
+					<label for="item_description">Description</label> <br />
 					<textarea name="item_description" id="" cols="30" rows="10"></textarea>
 				</p>
 				<p>
-					<label for="catalog_name">Composition</label> <br />
+					<label for="item_composition">Composition</label> <br />
 					<input type="text" name="item_composition" size="50" />
 				</p>
 				<p>
@@ -149,6 +170,30 @@
 
 		<div id="manage-store" class="designer-block hide">
 			<h3> Manage Your Store</h3>
+			<table border=1>
+				<tr>
+					<th>Image</th>
+					<th>Product ID</th>
+					<th>Product Name</th>
+					<th>Categories</th>
+					<th>Tags</th>
+				</tr>
+				<?php
+				foreach( $designer_inventory as $index => $item) {
+				?>
+					<tr>
+						<td>
+							<img src="<?php echo $item['img_path']; ?>"	/>
+						</td>
+						<td><?php echo $item['id']; ?></td>
+						<td><?php echo $item['title']; ?></td>
+						<td><?php echo $item['category']; ?></td>
+						<td><?php echo $item['tags']; ?></td>
+					</tr>
+				<?php
+				}
+				?>
+			</table>
 		</div>
 
 	</div>

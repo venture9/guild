@@ -35,6 +35,8 @@
 			$data[ 'designer_phone' ] = $this->designer_model->get_attr( $designer_id, 'Phone');
 			$data[ 'designer_description' ] = $this->designer_model->get_attr( $designer_id, 'Designer_description' );
 			$data[ 'boutique_description' ] = $this->designer_model->get_attr( $designer_id, 'Boutique_description' );
+			// Get this Designer's Invertory
+			$data[ 'designer_inventory' ] = $this->designer_item_model->single_invertory( $designer_id );
 			$this->load_dashboard( $data );
 
 		}
@@ -142,7 +144,6 @@
 			$config['max_size'] = '30000';
 
 			$this->load->library('upload', $config);
-			p('ready');
 			if ($this->upload->do_upload()) {
 
 				$data = $this->upload->data();
