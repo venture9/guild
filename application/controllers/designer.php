@@ -37,6 +37,7 @@
 			$data[ 'boutique_description' ] = $this->designer_model->get_attr( $designer_id, 'Boutique_description' );
 			// Get this Designer's Invertory
 			$data[ 'designer_inventory' ] = $this->designer_item_model->single_invertory( $designer_id );
+
 			$this->load_dashboard( $data );
 
 		}

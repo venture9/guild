@@ -1,4 +1,19 @@
+<?php
+	$men_category = array();
+	$men_clothing = ["beachwear", "coats", "denim", "jackets", "polo shirts", "shirts", "shorts", "suits", "sweater&knitwear", "trousers", "t-shirts&vests", "other"];
+	$men_category["clothing"] = $men_clothing;
+	$men_shoes = ["hi-top", "loafers", "boots", "other"];
+	$men_category["shoes"] = $men_shoes;
+	$men_bags = ["backpacks", "totes", "shoulder bags", "other"];
+	$men_category["bags"] = $men_bags;
+	$men_accessories = ["belts", "hats", "sunglasses", "other"];
+	$men_category["accessories"] = $men_accessories;
+	//p(json_encode($men_category));
+	$men_category = json_encode($men_category);
+	//p($men_category[0][0]);
 
+
+?>
 <div class="container designer-dashboard-container">
 	<h3> <?php echo $designer_name; ?> </h3>
 
@@ -128,20 +143,20 @@
 				<p>
 					<span>
 						<label for="gender"> Gender </label>
-						<select name="gender" size="1" onchange="">
+						<select id="gender" name="gender" size="1" onchange="">
 							<option value="men" selected="selected"> Men </option>
 							<option value="women"> Women </option>
 						</select>
 					</span>
 					<span>
 						<label for="category"> Category </label>
-						<select name="category">
+						<select id="category" name="category">
 							<option value="" selected="selected"> Please select the gender first </option>
 						</select>
 					</span>
 					<span>
 						<label for="item-type"> Type </label>
-						<select name="item-type" id="">
+						<select id="item-type" name="item-type" id="">
 							<option value="" selected="selected"> Please select the category first </option>
 						</select>
 					</span>
