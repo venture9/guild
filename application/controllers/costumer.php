@@ -31,12 +31,12 @@
 			$costumer_id = $this->costumer_model->get_id( $user_id );
 			$costumer_name = $this->costumer_model->get_attr( $costumer_id, 'Name');
 			$costumer_email = $this->costumer_model->get_attr( $costumer_id, 'Email' );
-			$costumer_project = $this->costumer_model->get_attr( $costumer_id, 'Project' );
+			$costumer_company = $this->costumer_model->get_attr( $costumer_id, 'Company' );
 			// Mandatory field
 			$data[ 'costumer_id' ] = $costumer_id;
 			$data[ 'costumer_name' ] = $costumer_name;
 			$data[ 'costumer_email' ] = $costumer_email;
-			$data[ 'costumer_project' ] = $costumer_project;
+			$data[ 'costumer_company' ] = $costumer_company;
 
 			$this->load_dashboard( $data );
 		}

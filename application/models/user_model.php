@@ -32,7 +32,7 @@
 				$data = array(
 					'Name' => $name,
 					'Email' => $email,
-					'Project' => $company,
+					'Company' => $company,
 					'User_id' => $id
 				);
 				$this->db->insert( 'Costumer_table', $data);
