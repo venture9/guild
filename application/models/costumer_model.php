@@ -10,25 +10,19 @@
 			parent::__construct();
 		}
 
-		public function get_name( $costumer_id ) {
-
-			$query = $this->db->get_where( 'Costumer_table', array( "Id" => $costumer_id ) );
+		public function get_id( $user_id ) {
+			$query = $this->db->get_where( 'Costumer_table', array( 'User_Id' => $user_id) );
 			$row = $query->row();
-			$costumer_name = $row->Name;
-
-			return $costumer_name;
+			return $row->Id;
 		}
 
-		public function get_recent_id( $user_id ) {
-
-			$query = $this->db->get_where( 'Costumer_table', array( "User_id" => $user_id, "Recent" => 1) );
-			$row = $query->row();
-			if ($row) {
-				$recent_id = $row->Id;
-				return $recent_id;
-			} else {
-				return 0;
+		public function get_attr( $costumer_id, $attr_name) {
+			$query = $this->db->get_where( 'Costumer_table', array('id' => $costumer_id) );
+			$row = $query -> row();
+			if( $row ) {
+				return $row->$attr_name;
 			}
+			return " ";
 		}
 	}
 

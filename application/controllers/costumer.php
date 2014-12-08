@@ -14,30 +14,31 @@
 		}
 
 		public function index() {
+			//p( $this->session->all_userdata() );
 			$user_id = $this->session->userdata( 'user_id' );
-			if( !$user_id ) {
-				$this->go_home();
+			$user_role = $this->session->userdata( 'user_role' );
+			$cmp = strcmp( $user_role, 'Costumer' );
+			if( !$user_id || $cmp !== 0 ) {
+				//No permissio
+				echo "Session exception occured!".'<br>';
+				echo "User_id:".$user_id."</br>";
+				echo 'User_role:'.$user_role.'</br>';
+				die();
 			}
+			echo "Session exception occured!".'<br>';
+				echo "User_id:".$user_id."</br>";
+				echo 'User_role:'.$user_role;
+			$costumer_id = $this->costumer_model->get_id( $user_id );
+			$costumer_name = $this->costumer_model->get_attr( $costumer_id, 'Name');
+			$costumer_email = $this->costumer_model->get_attr( $costumer_id, 'Email' );
+			$costumer_project = $this->costumer_model->get_attr( $costumer_id, 'Project' );
+			// Mandatory field
+			$data[ 'costumer_id' ] = $costumer_id;
+			$data[ 'costumer_name' ] = $costumer_name;
+			$data[ 'costumer_email' ] = $costumer_email;
+			$data[ 'costumer_project' ] = $costumer_project;
 
-			$costumer_id = $this->session->userdata( 'costumer_id' );
-			if( $costumer_id ) {
-
-				$costumer_name = $this->get_name_by_id( $costumer_id );
-				$data[ 'costumer_name' ] = $costumer_name;
-				$this->load_dashboard( $data );
-			} else {
-
-				$get_recent_id = $this->costumer_model->get_recent_id( $user_id );
-				if( $get_recent_id ) {
-					$costumer_name = $this->get_name_by_id ( $costumer_id );
-					$data[ 'costumer_name' ] = $costumer_name;
-					$this->load_dashboard( $data );
-				} else {
-					// no history yet
-					$data[ 'no_history' ] = 1;
-					$this->load_dashboard( $data );
-				}
-			}
+			$this->load_dashboard( $data );
 		}
 
 		private function load_dashboard( $data ) {

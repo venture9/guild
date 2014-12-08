@@ -58,8 +58,6 @@
 				var target_selector_id = $(this).attr('href');
 				$(target_selector_id).removeClass('hide');
 				$(target_selector_id).addClass('active');
-				//$(target_selector_id).toggle(400);
-				// active clicked nav
 				$(this).addClass('active');
 
 			});
@@ -84,14 +82,6 @@
 						<option value='bags'> bags </option> \
 						<option value='accessories'> accessories </option> \
 					");
-					/*
-					console.log( men_category["clothing"],length );
-					for( i=0; i < men_category["clothing"].length; i++) {
-						$("#item-type").append(" \
-							<option>"+men_category["clothing"][i]+"</option> \
-						");
-					}
-					*/
 				} else {
 					$("#category").html(" \
 						<option value='clothing' selected='selected'> clothing </option> \
@@ -111,7 +101,7 @@
 							$("#item-type").html("");
 							for( i=0; i < men_category[key].length; i++) {
 								$("#item-type").append(" \
-									<option>"+men_category[key][i]+"</option> \
+									<option value='"+men_category[key][i]+"'>"+men_category[key][i]+"</option> \
 								");
 							}
 						}
@@ -122,29 +112,13 @@
 							$("#item-type").html("");
 							for( i=0; i < women_category[key].length; i++) {
 								$("#item-type").append(" \
-									<option>"+women_category[key][i]+"</option> \
+									<option value='"+women_category[key][i]+"'>"+women_category[key][i]+"</option> \
 								");
 							}
 						}
 					}
 				}
 			}
-			/*
-			$("#designer-info-btn").click(function(event){
-				event.preventDefault();
-				// toggle up others, toggle down designer-info-design
-				$("#designer-upload").hide();
-				$("")
-				$("#designer-info").slideDown(400);
-			});
-
-			$("#designer-upload-btn").click(function(event){
-				event.preventDefault();
-				// toggle up others, toggle down designer-upload-design
-				$("#designer-info").hide();
-				$("#designer-upload").slideDown(400);
-			});
-			*/
 		});
 	</script>
 </html>

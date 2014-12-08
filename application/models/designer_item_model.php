@@ -23,7 +23,9 @@
 				'Price' => $this->input->post('item_price'),
 				'Description' => $this->input->post('item_description'),
 				'Compostion' => $this->input->post('item_composition'),
-				'Category' => $this->input->post('item_category'),
+				'Gender' => $this->input->post('gender'),
+				'Category' => $this->input->post('category'),
+				'Item_type' => $this->input->post('item_type'),
 				'Dir_path' => $item_dir_path,
 				'Designer_id' => $designer_id
 			);
@@ -81,7 +83,10 @@
 					$item['id'] = $row->Id;
 					$item['img_path'] = $this->item_img_path( $row->Id );
 					$item['title'] = $row->Title;
-					$item['category'] = $row->Category;
+					// $item['gender'] = $row->Gender;
+					// $item['category'] = $row->Category;
+					// $item['Item_type'] = $row->Item_type;
+					$item['category'] = $row->Gender."/".$row->Category."/".$row->Item_type;
 					$item['tags'] = ' ';
 					$item_list[] = $item;
 				}
@@ -94,9 +99,22 @@
 			}
 		}
 
+		public function check_permission( $designer_id, $item_id ) {
+			$query = $this->db->get_where( 'Item_table', array( "Id"=>$item_id, "Designer_id"=>$designer_id ) );
+			if( $query->num_rows() == 1 ) {
+				return 1;
+			}
+			// this item doesnot belong to this designer
+			return 0;
+		}
+
 		private function item_img_path( $item_id ) {
 			$query = $this->db->get_where( 'Image_table', array("Item_Id"=>$item_id) );
 			$row = $query->row();
-			return $row->Item_path;
+			if( $row ){
+				return $row->Item_path;
+			} else {
+				return " ";
+			}
 		}
 	}

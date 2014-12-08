@@ -23,25 +23,30 @@
 				'pin' => $key
 			);
 			$this->db->insert( 'Users' , $data);
-			
+
 			$query = $this->db->get_where( 'Users', array("username" => $name) );
 			$row = $query->row();
 			$id = $row->Id;
-			
-			// $this->login($email, $password);
+
 			if( $role == 'Costumer' ) {
-				
+				$data = array(
+					'Name' => $name,
+					'Email' => $email,
+					'Project' => $company,
+					'User_id' => $id
+				);
+				$this->db->insert( 'Costumer_table', $data);
+				$this->login( $email, $password);
 			}else{
-				// Designers -> get Dir_path
 				$dir_path = getcwd().'/uploads/'.$name;
 				if( !is_dir($dir_path) ) {
 					mkdir($dir_path, 0755);
 				}
-				
+
 				$data = array(
 					'Name' => $name,
 					'Email' => $email,
-					'Boutique' => $company, 
+					'Boutique' => $company,
 					'Dir_path' => $dir_path,
 					'User_id' => $id
 				);
@@ -98,12 +103,12 @@
 			$role = $row->Role;
 			return $role;
 		}
-		
+
 		function get_company($key) {
 			$query = $this->db->get_where( 'Pin_table', array('PIN' => $key) );
 			$row = $query->row();
 			$company = $row->Company;
-			
+
 			return $company;
 		}
 	}

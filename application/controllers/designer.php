@@ -17,7 +17,8 @@
 		public function index() {
 
 			$user_id = $this->session->userdata( 'user_id' );
-			if( !$user_id ) {
+			$role = $this->session->userdata( 'user_role' );
+			if( !$user_id || strcmp( $role, 'Designer' ) !== 0 ) {
 				$this->go_home();
 			}
 
@@ -180,5 +181,21 @@
 					echo json_encode(array("files" => $files));
 				}
 			}
+		}
+
+		public function update( $item_id ) {
+			echo "Item id:".$item_id."<br>";
+			// first check if user is logged in and this item_id belongs to him
+			$user_id = $this->session->userdata('user_id');
+			$designer_id = $this->designer_model->get_id($user_id);
+
+			$check_permission = $this->designer_item_model->check_permission( $designer_id, $item_id );
+			if( !$check_permission ) {
+				echo "No permission";
+				die();
+				//$this->load->view('not_allowed');
+			}
+			echo "Placeholders for updating this page";
+
 		}
 	}

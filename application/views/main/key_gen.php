@@ -6,8 +6,8 @@
 			<input type="password" name="password" size="30" /> <br>
 		<p>role:</p>
 		   <select name="role" style="width: 120px; height: 60px;">
-			  <option value="costumer">Costumer</option>
-			  <option value="designer">Designer</option>
+			  <option value="Costumer">Costumer</option>
+			  <option value="Designer">Designer</option>
 			</select> <br>
 		<p>name: </p>
 			<input type="text" size="50" name="user_name" /> <br>

@@ -25,8 +25,11 @@ class Main extends CI_Controller {
 	public function signin()
 	{
 		// Check if user is logged in
-		if($this->session->userdata('user_name') != '') {
-			$this->dashboard();
+		if( $this->session->userdata('user_id') ) {
+			$role = strtolower( $this->session->userdata( 'user_role' ) );
+
+			header( 'Location: '.base_url().$role );
+
 		} else {
 			$data['error'] = '';
 			$this->load->view('main/header');
@@ -69,13 +72,7 @@ class Main extends CI_Controller {
 		$password=md5($this->input->post('pass'));
 
 		$result=$this->user_model->login($email,$password);
-		if($result) {
-			// Successfully logged in
-			$this->dashboard();
-		}else {
-			p('Guild:: Login Failed');
-			$this->signin();
-		}
+		$this->signin();
 	}
 
 	private function dashboard()
@@ -115,7 +112,7 @@ class Main extends CI_Controller {
 			$name = $this->input->post('user_name');
 			$company = $this->input->post('user_company');
 			$pin = random_string( 'alnum', 5);
-			p($pin);
+			//p($pin);
 			$newuser = array(
 				'Role' => $role,
 				'Name' => $name,

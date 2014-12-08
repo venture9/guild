@@ -1,16 +1,14 @@
 <?php
-	$men_category = array();
-	$men_clothing = ["beachwear", "coats", "denim", "jackets", "polo shirts", "shirts", "shorts", "suits", "sweater&knitwear", "trousers", "t-shirts&vests", "other"];
-	$men_category["clothing"] = $men_clothing;
-	$men_shoes = ["hi-top", "loafers", "boots", "other"];
-	$men_category["shoes"] = $men_shoes;
-	$men_bags = ["backpacks", "totes", "shoulder bags", "other"];
-	$men_category["bags"] = $men_bags;
-	$men_accessories = ["belts", "hats", "sunglasses", "other"];
-	$men_category["accessories"] = $men_accessories;
-	//p(json_encode($men_category));
-	$men_category = json_encode($men_category);
-	//p($men_category[0][0]);
+	// $men_category = array();
+	// $men_clothing = ["beachwear", "coats", "denim", "jackets", "polo shirts", "shirts", "shorts", "suits", "sweater&knitwear", "trousers", "t-shirts&vests", "other"];
+	// $men_category["clothing"] = $men_clothing;
+	// $men_shoes = ["hi-top", "loafers", "boots", "other"];
+	// $men_category["shoes"] = $men_shoes;
+	// $men_bags = ["backpacks", "totes", "shoulder bags", "other"];
+	// $men_category["bags"] = $men_bags;
+	// $men_accessories = ["belts", "hats", "sunglasses", "other"];
+	// $men_category["accessories"] = $men_accessories;
+	// $men_category = json_encode($men_category);
 
 
 ?>
@@ -23,33 +21,8 @@
 	<h5> Item - <?php //echo $item_dir_path; ?></h5>
 
 	<?php echo validation_errors('<p class="error">'); ?>
-	<div class="catalog-container hidden">
-		<h3>Placeholders for Dashboard</h3>
-		<button class="btn btn-warning">New Catalog</button>
-
-		<?php echo form_open_multipart( 'upload/catalog'); ?>
-
-			<select name="choose_catalog" id="choose_catalog">
-				<option value="default-select">Please select a Catalog</option>
-			</select>
-			<p>
-				<label for="catalog_name">Catalog Name</label> <br />
-				<input type="text" name="catalog_name" size="50" />
-			</p>
-			<p>
-				<label for="cover_image"> Choose a cover image </label>
-				<input type="file" name="cover_image" />
-			</p>
-			<p>
-				<label for="tags"> Tags(use space to seperate) </label> <br />
-				<input type="text" name="catalog_tags" size="50" />
-			</p>
-			<input type="submit" name="create-catalog-btn" value="Create Catalog" class="btn btn-warning"/>
-		</form>
-	</div>
-	<hr />
 	<!-- Left Menu -->
-	<div class="left-bar col-md-4">
+	<div class="left-bar col-md-3">
 		<span class="left-row">
 			<a href="#designer-info" id="designer-info-btn" class="left-row-item active">
 				<h4>Your Profile</h4>
@@ -76,7 +49,7 @@
 	<!-- Left Menu Ends -->
 
 	<!-- Right Menu -->
-	<div class="right-container col-md-8">
+	<div class="right-container col-md-9">
 
 		<div id="designer-info" class="desinger-block active">
 			<h3> Your Profile </h3>
@@ -156,7 +129,7 @@
 					</span>
 					<span>
 						<label for="item-type"> Type </label>
-						<select id="item-type" name="item-type" id="">
+						<select id="item-type" name="item_type">
 							<option value="" selected="selected"> Please select the category first </option>
 						</select>
 					</span>
@@ -175,10 +148,6 @@
 					<label for="item_composition">Composition</label> <br />
 					<input type="text" name="item_composition" size="50" />
 				</p>
-				<p>
-					<label for="tags"> Category </label> <br />
-					<input type="text" name="item_category" size="50" />
-				</p>
 				<input type="submit" name="create-catalog-btn" value="Next" class="btn btn-primary"/>
 			</form>
 		</div>
@@ -191,7 +160,8 @@
 					<th>Product ID</th>
 					<th>Product Name</th>
 					<th>Categories</th>
-					<th>Tags</th>
+					<th>Composition</th>
+					<th>Action</th>
 				</tr>
 				<?php
 				foreach( $designer_inventory as $index => $item) {
@@ -204,6 +174,10 @@
 						<td><?php echo $item['title']; ?></td>
 						<td><?php echo $item['category']; ?></td>
 						<td><?php echo $item['tags']; ?></td>
+						<td>
+							<p><a href="<?php echo base_url().'designer/update/'.$item['id']; ?>">Update</a></p>
+							<p><a href="">Delete</a></p>
+						</td>
 					</tr>
 				<?php
 				}
