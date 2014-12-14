@@ -39,15 +39,15 @@
 		<div id="costumer-info" class="desinger-block active">
 			<h3> Your Profile </h3>
 			<form action="<?php echo base_url().'costumer/update_costumer'; ?>" method="post" id="costumer-info-form">
-				<h2>Current Project Information</h2>
+				<h2>Company Information</h2>
 				<p>
-					<label for="catalog_name">Project Name</label> <br />
-					<input type="text" name="project_name" size="50" value="<?php echo $costumer_company; ?>" />
+					<label for="catalog_name">Company</label> <br />
+					<input type="text" name="costumer_company" size="50" value="<?php echo $costumer_company; ?>" />
 				</p>
 
 				<p>
-					<label for="catalog_name">Project Description</label> <br />
-					<textarea name="project_description" id="" cols="30" rows="10"><?php if( isset($project_description) ) echo $project_description; ?>
+					<label for="catalog_name">Company Description</label> <br />
+					<textarea name="company_description" id="" cols="30" rows="10"><?php if( isset($company_description) ) echo $company_description; ?>
 					</textarea>
 				</p>
 				<hr />
@@ -76,22 +76,29 @@
 			</form>
 			<div class="ajax-error-debug" style="height: 100px; color: orange;">
 
-
 			</div>
 		</div>
 
 		<div id="create-project" class="costumer-block hide">
 			<h3> Create a project</h3>
-			<form action="<?php echo base_url().'costumer/add_project'; ?>">
+			<form action="<?php echo base_url().'costumer/create_project'; ?>" id="create-project-form">
 				<p>
 					<label for="project-name">Project</label> <br />
 					<input type="text" name="project_name" size="50" />
 				</p>
 				<p>
+					<label for="release-date"> Release Date </label> <br />
+					<input type="text" name="release_date" size="50" />
+				</p>
+				<p>
 					<label for="project-description">Project Description</label> <br />
 					<textarea name="project_description" id="" cols="30" rows="10"></textarea>
 				</p>
+				<input type="button" id="create-project-btn" class="btn btn-primary" value="Create" />
 			</form>
+			<div class="ajax-create-error" style="height: 100px; color: orange;"
+
+			</div>
 		</div>
 
 		<div id="manage-store" class="costumer-block hide">

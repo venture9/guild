@@ -25,18 +25,24 @@
 				echo 'User_role:'.$user_role.'</br>';
 				die();
 			}
-			echo "Session exception occured!".'<br>';
-				echo "User_id:".$user_id."</br>";
-				echo 'User_role:'.$user_role;
-			$costumer_id = $this->costumer_model->get_id( $user_id );
-			$costumer_name = $this->costumer_model->get_attr( $costumer_id, 'Name');
-			$costumer_email = $this->costumer_model->get_attr( $costumer_id, 'Email' );
-			$costumer_company = $this->costumer_model->get_attr( $costumer_id, 'Company' );
+			echo "User_id:".$user_id."</br>";
+			echo 'User_role:'.$user_role;
+			$id = $this->costumer_model->get_id( $user_id );
+			$name = $this->costumer_model->get_attr( $id, 'Name');
+			$email = $this->costumer_model->get_attr( $id, 'Email' );
+			$company = $this->costumer_model->get_attr( $id, 'Company' );
+			$phone = $this->costumer_model->get_attr( $id, 'Phone' );
+			$company_description = $this->costumer_model->get_attr( $id, 'Company_description' );
+			$description = $this->costumer_model->get_attr( $id, 'Costumer_description' );
 			// Mandatory field
-			$data[ 'costumer_id' ] = $costumer_id;
-			$data[ 'costumer_name' ] = $costumer_name;
-			$data[ 'costumer_email' ] = $costumer_email;
-			$data[ 'costumer_company' ] = $costumer_company;
+			$data[ 'costumer_id' ] = $id;
+			$data[ 'costumer_name' ] = $name;
+			$data[ 'costumer_email' ] = $email;
+			$data[ 'costumer_company' ] = $company;
+			// Optional
+			$data[ 'costumer_phone' ] = $phone;
+			$data[ 'company_description' ] = $company_description;
+			$data[ 'costumer_description' ] = $description;
 
 			$this->load_dashboard( $data );
 		}

@@ -40,7 +40,9 @@
 
 // ajax
 $route[ 'ajax' ] = "";
-$route[ 'ajax/designer_info_update' ] = "ajax/designer_info_update";
+$route[ 'ajax/designer-info-update' ] = "ajax/designer_info_update";
+$route[ 'ajax/costumer-info-update' ] = "ajax/costumer_info_update";
+$route[ 'ajax/costumer-create-project' ] = "ajax/costumer_create_project";
 
 // routes for Designer
 $route[ 'designer' ] = "designer";

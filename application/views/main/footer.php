@@ -27,7 +27,7 @@
 
 			$("#designer-info-update").click(function(){
 
-				$ajax_url = "<?php echo base_url().'ajax/designer_info_update'; ?>";
+				$ajax_url = "<?php echo base_url().'ajax/designer-info-update'; ?>";
 				$.ajax({
 					type: "post",
 					url: $ajax_url,
@@ -43,6 +43,53 @@
 					}
 				});
 			});
+
+			$("#costumer-info-update").click(function(){
+
+				$ajax_url = "<?php echo base_url().'ajax/costumer-info-update'; ?>";
+				$.ajax({
+					type: "post",
+					url: $ajax_url,
+					data: $("#costumer-info-form").serialize(),
+					success: function(res) {
+						//alert(res);
+						$( ".ajax-error-debug" ).html( res );
+						//location.reload();
+					},
+					error: function( xhr, ajaxOptions, thrownError ) {
+						//alert(thrownError);
+						$( ".ajax-error-debug" ).html( res );
+						$( ".ajax-error-debug" ).append( xhr );
+						$( ".ajax-error-debug" ).append( ajaxOptions );
+						$( ".ajax-error-debug" ).append( thrownError );
+					}
+				});
+			});
+
+			$("#create-project-btn").click(function(){
+				$ajax_url = "<?php echo base_url().'ajax/costumer-create-project'; ?>";
+				$.ajax({
+					type: "post",
+					url: $ajax_url,
+					data: $("#create-project-form").serialize(),
+					success: function(res) {
+						//alert(res);
+						$( ".ajax-create-error" ).html( res );
+						//location.reload();
+					},
+					error: function( xhr, ajaxOptions, thrownError ) {
+						//alert(thrownError);
+						ajax_error_info( 'ajax-create-error', xhr, ajaxOptions, thrownError);
+					}
+				});
+			});
+
+			var ajax_error_info = function( div_class, xhr, ajaxOptions, thrownError) {
+				//alert( div_class );
+				$( "."+div_class ).html("<p>"+thrownError+"</p>");
+				$( "."+div_class ).append("<p>"+ajaxOptions+"</p>");
+				console.log( xhr );
+			}
 
 			$('.left-bar > .left-row > a').click(function( event ){
 				event.preventDefault();

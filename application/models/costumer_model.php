@@ -22,7 +22,7 @@
 			if( $row ) {
 				return $row->$attr_name;
 			}
-			return " ";
+			return "";
 		}
 	}
 
