@@ -96,13 +96,39 @@
 				</p>
 				<input type="button" id="create-project-btn" class="btn btn-primary" value="Create" />
 			</form>
-			<div class="ajax-create-error" style="height: 100px; color: orange;"
+			<div class="ajax-create-error" style="height: 100px; color: orange;">
 
 			</div>
 		</div>
 
 		<div id="manage-store" class="costumer-block hide">
 			<h3> Manage Your Projects</h3>
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Release Date</th>
+					<th>Active</th>
+					<th>Create Date</th>
+					<th> </th>
+				</tr>
+				<tbody>
+				<?php
+					for( $i=0; $i < sizeof($project_list); $i++ ) {
+				?>
+					<tr>
+						<td> <?php echo $project_list[$i]['Name']; ?> </td>
+						<td> <?php echo $project_list[$i]['Description']; ?> </td>
+						<td> <?php echo $project_list[$i]['Release_date']; ?></td>
+						<td> <?php echo $project_list[$i]['Current']; ?> </td>
+						<td> <?php echo $project_list[$i]['Create_date']; ?> </td>
+						<td> <button class="btn btn-success"> Edit </button> </td>
+					</tr>
+				<?php
+					}
+				?>
+				</tbody>
+			</table>
 		</div>
 
 	</div>

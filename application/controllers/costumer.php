@@ -10,6 +10,7 @@
 			parent::__construct();
 			$this->load->model( 'costumer_model' );
 			$this->load->model( 'user_model' );
+			$this->load->model( 'costumer_project_model' );
 			$this->load->helper( 'form' );
 		}
 
@@ -27,6 +28,7 @@
 			}
 			echo "User_id:".$user_id."</br>";
 			echo 'User_role:'.$user_role;
+			// Tab-1 Get Personal Information
 			$id = $this->costumer_model->get_id( $user_id );
 			$name = $this->costumer_model->get_attr( $id, 'Name');
 			$email = $this->costumer_model->get_attr( $id, 'Email' );
@@ -43,6 +45,11 @@
 			$data[ 'costumer_phone' ] = $phone;
 			$data[ 'company_description' ] = $company_description;
 			$data[ 'costumer_description' ] = $description;
+
+			// Tab-3 Get the list of projects.
+			$project_list = $this->costumer_project_model->get_all( $id );
+			// p($project_list);
+			$data['project_list'] = $project_list;
 
 			$this->load_dashboard( $data );
 		}

@@ -38,7 +38,7 @@
 						"Phone" => $serial_data[ 'costumer_phone' ],
 						"Company" => $serial_data[ 'costumer_company' ],
 						"Costumer_description" => $serial_data[ 'costumer_description' ],
-						"Company_description" => $serial_data[ 'company_description']
+						"Company_description" => $serial_data[ 'company_description' ]
 					);
 			$this->db->where( 'Id', $costumer_id );
 			if( $this->db->update( 'Costumer_table', $data ) ) {
@@ -52,10 +52,11 @@
 			$this->check_data( $serial_data );
 
 			$data = array(
-					"Name" => $serial_data["project_name"],
-					"Description" => $serial_data["project_description"],
-					"Release_date" => $serial_data["release_date"],
-					"Active" => 1
+					"Name" => $serial_data[ 'project_name' ],
+					"Description" => $serial_data[ 'project_description' ],
+					"Release_date" => $serial_data[ 'release_date' ],
+					"Active" => 1,
+					"Costumer_id" => $costumer_id,
 				);
 
 			if ( $this->db->insert( 'Project_table', $data ) ) {
@@ -66,8 +67,8 @@
 		}
 
 		private function check_data( $serial_data ) {
-			foreach ( $serial_data as $key => $value) {
-				if ( !$serial_data[$key] || $serial_data[$key]==' ' ) {
+			foreach ( $serial_data as $key => $value ) {
+				if ( !$serial_data[$key] || $serial_data[$key] == ' ' ) {
 					return "Please fill in filed $key";
 				}
 			}
